@@ -1,14 +1,10 @@
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
 const admin = require("firebase-admin");
 
-// 🔑 Carrega a chave que você baixou do Firebase
-// Certifique-se que o arquivo "serviceAccountKey.json" está na mesma pasta!
-const serviceAccount = require("./serviceAccountKey.json");
-
-// 🚀 Inicializa o Firebase
+// 🔑 A MUDANÇA ESTÁ AQUI: Lê a chave das variáveis de ambiente
+// Certifique-se de ter adicionado a chave GOOGLE_APPLICATION_CREDENTIALS no Render!
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  // 🔗 URL do seu banco de dados
+  credential: admin.credential.cert(JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS)),
   databaseURL: "https://ro-globalmessage-default-rtdb.firebaseio.com/" 
 });
 
@@ -32,7 +28,7 @@ client.once("ready", () => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  // 🛡️ SEGURANÇA: Só aceita comando do seu ID (841709448338472991)
+  // 🛡️ SEGURANÇA: Só aceita comando do seu ID
   if (message.author.id !== "841709448338472991") return;
 
   // 📝 Comando: !GlobalMessage [texto]
@@ -42,7 +38,6 @@ client.on("messageCreate", async (message) => {
   if (!texto) return;
 
   // 📤 Salva a mensagem no Firebase
-  // Isso cria uma entrada que o Roblox vai ler
   try {
     await db.ref("globalMessage").set({
       text: texto,
