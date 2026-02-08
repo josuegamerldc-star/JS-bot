@@ -1,16 +1,17 @@
 {
   "name": "js-studio-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Bot para enviar mensagens globais no Roblox",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "discord.js": "^14.25.1"
+    "discord.js": "^14.25.1",
+    "firebase-admin": "^12.0.0"
   }
 }
